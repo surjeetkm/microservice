@@ -3,6 +3,7 @@ node{
              git 'https://github.com/surjeetkm/microservice'
          }
          stage('Compile-Package'){
-             bat 'mvn-package'
+             def mvnHome=tool name: 'MAven', type: 'maven'
+                  bat "${mvnHome}/bin/mvn package"
          }
 }
