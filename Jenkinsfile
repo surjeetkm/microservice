@@ -1,40 +1,9 @@
-pipeline {
-         agent any
-         stages {
-                 stage('One') {
-                 steps {
-                     echo 'Hi, this is Zulaikha from edureka'
-                 }
-                 }
-                 stage('Two') {
-                 steps {
-                    echo('Do you want to proceed?')
-                 }
-                 }
-                 stage('Three') {
-                 when {
-                       not {
-                            branch "master"
-                       }
-                 }
-                 steps {
-                       echo "Hello"
-                 }
-                 }
-                 stage('Four') {
-                 parallel { 
-                            stage('Unit Test') {
-                           steps {
-                                echo "Running the unit test..."
-                           }
-                           }
-                            stage('Integration test') {
-                              
-                              steps {
-                                echo "Running the integration test..."
-                              }
-                           }
-                           }
-                           }
-              }
+node{
+         stage('SCM Checkout'){
+             git 'https://github.com/surjeetkm/microservice'
+         }
+         stage('Compile-Package'){
+             def mvnHome=tool name: 'MAven', type: 'maven'
+                  bat "${mvnHome}/bin/mvn package"
+         }
 }
